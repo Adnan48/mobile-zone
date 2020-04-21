@@ -36,6 +36,13 @@ export default connect(mapStateToProps, null)(ProductTable)
 
 
 class ProductRow extends PureComponent{
+    onClickEdit = () => {
+        const {isEditable, index, history} = this.props;
+        if (isEditable){
+            history.push(`/edit/${index}`)
+        }
+    }
+
     render(){
         const {name, weight, availability, history,isEditable, index, isTitle} = this.props;
         const style={padding: 10, width: '20%',textAlign: 'center',  borderStyle: "solid", borderWidth: 1, margin: 5, borderRadius: 5, fontWeight : isTitle ? 'bold' : 'normal'};
@@ -44,7 +51,7 @@ class ProductRow extends PureComponent{
                 <Text style={style} >{name}</Text>
                 <Text style={style} >{weight} grams </Text>
                 <Text style={style}>{availability}</Text>
-                 {!isTitle ? <Button onClick={() => history.push(`/edit/${index}`) } style={{...style, backgroundColor: isEditable ? '#29B6F6' : '#9E9E9E', outline: 'normal'}} >
+                 {!isTitle ? <Button onClick={this.onClickEdit} style={{...style, backgroundColor: isEditable ? '#29B6F6' : '#9E9E9E', outline: 'normal'}} >
                 EDIT
                 </Button> : 
                  <Text style={style}>IsEditable</Text> 
