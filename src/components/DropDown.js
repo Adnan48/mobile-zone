@@ -5,10 +5,14 @@ import {DropdownButton, DropdownItem} from 'react-bootstrap';
 
 export default class DropDown extends PureComponent{
     render(){
-        const {options, onSelect, defaultOption } = this.props;
+        const {options, onSelect, defaultOption, placeholder } = this.props;
         return(
-    <DropdownButton title={defaultOption} >
-    {options.map(o => <DropdownItem onSelect={() => onSelect(o)} ><Text style={{background: '#ffffff', padding: 10}} >{o}</Text></DropdownItem>)}
+    <DropdownButton title={defaultOption || placeholder} style={{ width: '40%', textAlign: 'center', background: '#ffffff' }} >
+    {options.map(o => <DropdownItem onSelect={() => onSelect(o)}>
+        <View style={{ background: '#ffffff', padding: 5, border: '1px solid #000000',  width: '100%' }} >
+            <Text style={{background: '#ffffff'}} >{o}</Text>
+            </View>
+        </DropdownItem>)}
     </DropdownButton>
         )
     }
