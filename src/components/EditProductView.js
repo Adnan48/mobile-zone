@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react';
 import View from './View';
-import { Redirect } from 'react-router-dom';
 
 import Text from './Text';
 import {connect} from 'react-redux';
@@ -25,7 +24,7 @@ import {pricingInfo} from '../product';
     }
 
     componentDidMount(){
-                this.props.dispatch(getEditProductData(this.props.index));
+        this.props.dispatch(getEditProductData(this.props.index));
     }
 
     onChangeName = (e) => this.props.dispatch(updateProductData({name: e.target.value}));
@@ -38,6 +37,7 @@ import {pricingInfo} from '../product';
 
     onClickRadioButton = (e) => {
         this.props.dispatch(updateProductData({pricingTier: e.target.value}));
+        this.props.dispatch(updateProductData({priceRange: null}));
     }
 
     onSelectDropDownOption = (e) => {
@@ -67,7 +67,7 @@ import {pricingInfo} from '../product';
         }
 
     render(){
-        const {editedProduct, index} = this.props;
+        const {editedProduct} = this.props;
         const {errorMsg} = this.state;
         if(!editedProduct) return null;
         const {pricingTier, name, weight, availability, productUrl, priceRange, isEditable} = editedProduct;
@@ -91,6 +91,7 @@ import {pricingInfo} from '../product';
                     <Text style={{ padding: '0px 15px' }} >:</Text>
                 <DropDown options={pricingTier === 'budget' ? pricingInfo['budget'] : pricingInfo['premier'] } defaultOption={priceRange}
                 onSelect={this.onSelectDropDownOption}
+                placeholder="Select a pricing range"
                 />
                 </View> 
                 <View style={{ flexDirection: 'row' }} >
@@ -98,7 +99,7 @@ import {pricingInfo} from '../product';
                  <Text>Can Edit</Text>
                 </View>
                 {errorMsg && <Text style={{color: '#f44336'}} >{errorMsg}</Text>}
-                <Button style={{ padding: 10, width: '30%', borderRadius: 5, background: isEditable ? '#29B6F6' : '#9E9E9E' }} onClick={this.onClickSaveButton} > Save </Button>
+                <Button style={{ padding: 10, width: '30%', borderRadius: 5, background: '#29B6F6' }} onClick={this.onClickSaveButton} > Save </Button>
                 </View>
         )
     }
